@@ -17,7 +17,5 @@ def stopword_w2v(pair_words):
     numb  =r"^[0-9]+$"  
     return [ x for x in pair_words if len(x[0]) > 1 and re.match( pair, x[0] ) is None and re.match( numb, x[0]) is None]
 
-
-
 def remove_url(words):
     return re.sub(r'(?:^|[\s　]+)((?:https?|ftp):\/\/[^\s　]+)', "", words)

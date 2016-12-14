@@ -1,4 +1,13 @@
 # -*- coding: utf-8 -*-
+"""
+last update 12/14/2016
+author : zakktakk
+usage : python word2vec.py input_file_name keyword topk
+input : wakati file
+output : top k similer words (only specific pos words, defined as pos)
+example : python word2vec.py wakati/smaho.txt スマホ 50
+"""
+
 import argparse
 import os
 from gensim.models import word2vec
@@ -51,9 +60,14 @@ def main(arguments):
                                      )
     parser.add_argument('file_name', help='input file name',
                         type=str)
+    parser.add_argument('keyword', help='search keyword',
+                        type=str)
+    parser.add_argument('topk', help='number of output similer word list',
+                        type=str)
+
     args = parser.parse_args(arguments)
     w2v = W2V(args.file_name)
-    result = w2v.get_topk("スマホ", 300)
+    result = w2v.get_topk(args.keyword, int(args.topk))
     for word,val in result:
         print(word, val)
 

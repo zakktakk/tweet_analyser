@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-usage : tweet file must be wakachigakied(separated by space) & remove stop word
+last update 12/14/2016
+author : zakktakk
+usage : python word_count.py input_file_name keyword topk
+input : wakati file (only contain specific pos words)
+output : top k frequent words
+example : python word_count.py dripped_wakati/smaho.txt スマホ 50
 """
+
 import argparse
 from itertools import chain
 import sys
@@ -44,10 +50,16 @@ def main(arguments):
     parser = argparse.ArgumentParser(description=__doc__,
                                     formatter_class=argparse.RawDescriptionHelpFormatter
                                     )
-    parser.add_argument("path_to_tweet", help="path to tweet txt", type=str)
+    parser.add_argument("path_to_tweet", help="path to tweet txt",
+                        type=str)
+    parser.add_argument('keyword', help='search keyword',
+                        type=str)
+    parser.add_argument('topk', help='number of output word list',
+                        type=str)
+
     args = parser.parse_args(arguments)
     wc = WordCount(args.path_to_tweet)
-    result = wc.get_topk("スマホ", 300)
+    result = wc.get_topk(args.keyword, int(args.topk))
     print("word", "count")
     for i in result:
         print(i[0], i[1])

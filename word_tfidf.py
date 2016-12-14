@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-usage : tweet file must be wakachigakied(space separated) & remove stop word
-watashi tyoko suki amai
-hito kirai tyoko shine
+last update 12/14/2016
+author : zakktakk
+usage : python word_tfidf.py input_file_name keyword topk
+input : wakati file (only contain specific pos words)
+output : top k frequent words
+example : python word_tfidf.py dripped_wakati/smaho.txt スマホ 50
 """
+
 import argparse
-# TODO future work compare file if all _wakachi.txt file in same directory
 import os
 from itertools import chain
 import collections
@@ -81,8 +84,10 @@ def main(arguments):
                                      formatter_class=argparse.RawDescriptionHelpFormatter
                                      )
     parser.add_argument("file_path", help="path to tweet text", type=str)
+    parser.add_argument('topk', help='number of output word list',
+                        type=str)
     args = parser.parse_args(arguments)
-    result = Tfidf(args.file_path).get_top_k(300)
+    result = Tfidf(args.file_path).get_top_k(int(args.topk))
     print("word", "count")
     for i in result:
         print(i[0], i[1])
